@@ -1,0 +1,7 @@
+.entry-table tr {
+    width: 1500px;
+}
+
+.entry-table th, .entry-table td {
+    width: 250px;
+}

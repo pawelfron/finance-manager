@@ -1,9 +1,32 @@
-from rest_framework import generics
+from django.http import JsonResponse
+from rest_framework import generics, views, status, response
 from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import NotFound
-from rest_framework_simplejwt.views import TokenObtainPairView 
+from rest_framework_simplejwt.views import TokenObtainPairView
+import requests
 from .models import CustomUser, Entry, Category
 from .serializers import UserRegistrationSerializer, CustomTokenObtainPairSerializer, UserSerializer, EntrySerializer, CategorySerializer
+
+class InflationDataProxyView(views.APIView):
+    def get(self, request, *args, **kwargs):
+        start_period = request.query_params.get('startPeriod')
+        end_period = request.query_params.get('endPeriod')
+
+        external_api_url = f"https://data-api.ecb.europa.eu/service/data/ICP/M.PL.N.000000.4.ANR?format=jsondata&startPeriod={start_period}&endPeriod={end_period}"
+
+        try:
+            external_response = requests.get(external_api_url)
+            
+            if external_response.status_code == 200:
+                return JsonResponse(external_response.json(), safe=False)
+            else:
+                return response.Response(
+                    {"error": "ECB API request failed", "status_code": external_response.status_code},
+                    status=status.HTTP_502_BAD_GATEWAY
+                )
+
+        except requests.exceptions.RequestException as e:
+            return response.Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer

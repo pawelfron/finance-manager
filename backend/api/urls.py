@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView, TokenBlacklistView
-from .views import CustomTokenObtainPairView, UserRegistrationView, CategoryListCreateView, CategoryDetailView, EntryListCreateView, EntryDetailView, UserDetailView
+from .views import CustomTokenObtainPairView, InflationDataProxyView, UserRegistrationView, CategoryListCreateView, CategoryDetailView, EntryListCreateView, EntryDetailView, UserDetailView
 
 urlpatterns = [
     path('api/register', UserRegistrationView.as_view(), name='register_user'),
@@ -12,5 +12,7 @@ urlpatterns = [
     path('api/entries/<int:pk>', EntryDetailView.as_view(), name='entry-detail'),
     path('api/categories', CategoryListCreateView.as_view(), name='category-list'),
     path('api/categories/<int:pk>', CategoryDetailView.as_view(), name='category-detail'),
-    path('api/details/<int:pk>', UserDetailView.as_view(), name='user-details')
+    path('api/details/<int:pk>', UserDetailView.as_view(), name='user-details'),
+
+    path('api/proxy', InflationDataProxyView.as_view(), name='ecb-data-proxy')
 ]

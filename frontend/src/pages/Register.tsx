@@ -1,6 +1,7 @@
 import { FormEventHandler, useState } from "react";
 import { useNavigate } from "react-router";
 import api from "../api";
+import './Register.css'
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -16,20 +17,32 @@ const Register = () => {
             const { access, refresh } = response.data;
             localStorage.setItem('access-token', access);
             localStorage.setItem('refresh-token', refresh);
-            navigate('/content');
+            navigate('/dashboard');
         } catch (e) {
             console.log('Register failed');
         }
     }
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={username} placeholder="username" onChange={e => setUsername(e.target.value)}/>
-                <input type="email" value={email} placeholder="email" onChange={e => setEmail(e.target.value)}/>
-                <input type="password" value={password} placeholder="password" onChange={e => setPassword(e.target.value)}/>
-                <input type="submit" value="Submit"/>
-            </form>
-        </>
+        <form className="register-form mx-auto mt-5 p-2" onSubmit={handleSubmit}>
+            <h3>Register on finance manager:</h3>
+            <div className="m-1">
+                <label htmlFor="username" className="form-label">Username:</label>
+                <input id="username" type="text" className="form-control" value={username} placeholder="Username" onChange={e => setUsername(e.target.value)}/>
+            </div>
+
+            <div className="m-1">
+                <label htmlFor="email" className="form-label">Email:</label>
+                <input id="email" type="email" className="form-control" value={email} placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+            </div>
+
+            <div className="m-1">
+                <label htmlFor="password" className="form-label">Password:</label>
+                <input id="password" type="password" className="form-control" value={password} placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+            </div>
+
+
+            <input type="submit" value="Register" className="btn btn-primary m-1"/>
+        </form>
     )
 }
 

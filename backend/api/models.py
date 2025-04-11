@@ -8,7 +8,6 @@ class CustomUser(AbstractUser):
 
 class Category(models.Model):
     name = models.TextField('category name')
-    is_expense = models.BooleanField('is it an expense')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class Entry(models.Model):

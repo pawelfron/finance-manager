@@ -18,11 +18,13 @@ npm run dev # run the development server
 Then open the browser on the specified port.
 
 ##### Backend:
-Enter the `frontend` directory and run:
+Enter the `backend` directory and run:
 ```sh
 python -m venv venv # create a virtual environment
 source venv/bin/activate # activate the environment
 pip install -r requirements.txt # install dependencies
+echo "DJANGO_SECRET_KEY=$(python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')" > .env
+# create a .env file with a Django secret key (required for running)
 python manage.py migrate # create database and apply migrations
 python manage.py runserver # run the development server
 ```

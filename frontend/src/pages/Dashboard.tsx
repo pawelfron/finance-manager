@@ -11,7 +11,7 @@ const Dashboard = () => {
         try {
             const response = await api.get<Entry[]>('entries');
             const allEntries = response.data;
-            allEntries.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+            allEntries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
             setEntries(response.data.slice(0, 10));
         } catch (error) {
             console.log('API error', error);
@@ -36,7 +36,7 @@ const Dashboard = () => {
         <div className="m-auto w-auto text-center align-middle p-5">
             <div className="row">
                 <div className="col">
-                    <Balance />
+                    <Balance entries={entries}/>
                 </div>
                 <div className="col">
                     <NewEntry update={fetchData}/>

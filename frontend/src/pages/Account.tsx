@@ -1,5 +1,10 @@
 const Account = () => {
-    return (<div className="fs-1 m-auto w-auto text-center align-middle p-5">Account</div>)
+    return (
+        <div className="m-auto w-auto text-center align-middle p-5">
+            <h1>Account</h1>
+            
+        </div>
+    )
 }
 
 export default Account;

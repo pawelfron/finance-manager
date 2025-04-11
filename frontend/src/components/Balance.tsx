@@ -1,6 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import api from "../api";
 import { AuthContext } from "../AuthContext";
+import { Entry } from "./EntryTable";
 
 type Details = {
     username: string,
@@ -8,7 +9,11 @@ type Details = {
     balance: number
 }
 
-const Balance = () => {
+type BalanceProps = {
+    entries: Entry[]
+}
+
+const Balance: FC<BalanceProps> = ({ entries }) => {
     const [details, setDetails] = useState<Details | null>(null);
     const { userId } = useContext(AuthContext);
 
@@ -24,7 +29,7 @@ const Balance = () => {
         }
 
         fetchData();
-    })
+    }, [entries])
 
     return (
         <>

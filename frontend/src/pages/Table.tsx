@@ -25,7 +25,10 @@ const Table = () => {
     }, []);
 
     useEffect(() => setFilteredEntries(allEntries.filter(x => x.name.includes(searchQuery))), [allEntries, searchQuery]);
-    useEffect(() => setTotalPages(Math.ceil(filteredEntries.length / 10)), [filteredEntries]);
+    useEffect(() => {
+        setTotalPages(Math.ceil(filteredEntries.length / 10));
+        filteredEntries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    }, [filteredEntries]);
 
     const destroyEntry = async (id: number) => {
         try {

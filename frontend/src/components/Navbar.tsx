@@ -34,7 +34,7 @@ const Navbar = () => {
                 <Link to="/table" className="nav-item nav-link m-1">Table</Link>
                 <Link to="/categories" className="nav-item nav-link m-1">Categories</Link>
                 <Link to="/analysis" className="nav-item nav-link m-1">Analysis</Link>
-                <Link to="/account" className="nav-item nav-link m-1">Account</Link>
+                {/* <Link to="/account" className="nav-item nav-link m-1">Account</Link> */}
             </div>
 
         </nav>

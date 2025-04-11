@@ -36,7 +36,7 @@ class UserRegistrationView(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
 
-class UserDetailView(generics.RetrieveUpdateAPIView):
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
     def get_queryset(self):

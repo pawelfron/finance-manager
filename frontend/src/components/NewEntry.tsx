@@ -51,30 +51,49 @@ const NewEntry: FC<NewEntryProps> = ({ update }) => {
     };
 
     return (
-        <form className="new-category-form mx-auto" onSubmit={handleSubmit}>
-            <h3>Create new category:</h3>
+        <form className="new-category-form mx-auto mb-3" onSubmit={handleSubmit}>
+            <h3>Create new entry:</h3>
             <div className="m-1">
-                <label htmlFor="name" className="form-label">Name:</label>
-                <input id="name" type="text" className="form-control" value={name} placeholder="Name" onChange={e => setName(e.target.value)}/>
+                <div className="row align-items-center my-2">
+                    <div className="col-8">
+                        <input id="name" type="text" className="form-control" value={name} placeholder="Name" onChange={e => setName(e.target.value)}/>
+                    </div>
 
-                <label htmlFor="date" className="form-label">Date:</label>
-                <input id="date" type="date" className="form-control" value={date} onChange={e => setDate(e.target.value)}/>
+                    <div className="col-4">
+                        <select className="form-select" value={selectedCategory ?? ''} onChange={handleCategoryChange}>
+                            <option value="">Category</option>
+                            { categories.map(x => <option key={x.id} value={x.id}>{x.name}</option>) }
+                        </select>
+                    </div>
+                </div>
 
-                <label htmlFor="amount" className="form-label">Amount:</label>
-                <input id="amount" type="number" className="form-control" value={amount} onChange={e => setAmount(e.target.value)}/>
 
-                <label htmlFor="place" className="form-label">Place:</label>
-                <input id="place" type="text" className="form-control" value={place} placeholder="Place" onChange={e => setPlace(e.target.value)}/>
 
-                <label htmlFor="is-expense">Is expense</label>
-                <input id="is-expense" type="checkbox" checked={isExpense} onChange={handleIsExpenseChange}/>
+                <div className="row align-items-center my-2">
+                    <div className="col">
+                        <input id="date" type="date" className="form-control" value={date} onChange={e => setDate(e.target.value)}/>
+                    </div>
 
-                <select className="form-select" value={selectedCategory ?? ''} onChange={handleCategoryChange}>
-                    <option value="">Category</option>
-                    { categories.map(x => <option key={x.id} value={x.id}>{x.name}</option>) }
-                </select>
+                    <div className="col">
+                        <input id="place" type="text" className="form-control" value={place} placeholder="Place" onChange={e => setPlace(e.target.value)}/>
+                    </div>
+                </div>
+
+                <div className="row align-items-center my-2">
+                    <div className="col-4 form-check">
+                        <label htmlFor="is-expense" className="form-check-label">Is expense*</label>
+                        <input id="is-expense" type="checkbox" className="form-check-input" checked={isExpense} onChange={handleIsExpenseChange}/>
+                    </div>
+
+                    <div className="col">
+                        <input id="amount" type="number" placeholder="Amount" className="form-control" value={amount} onChange={e => setAmount(e.target.value)}/>
+                    </div>
+
+                </div>
 
                 <input type="submit" value="Create" className="btn btn-primary m-1"/>
+                
+                <h6>Check if it's an expense, uncheck if income</h6>
             </div>
         </form>
     );

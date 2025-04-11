@@ -1,23 +1,30 @@
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import api from "../api";
 import './Register.css'
+import { AuthContext } from "../AuthContext";
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSubmit: FormEventHandler = async (e) => {
         e.preventDefault();
         try {
             await api.post('/register', { username, email, password });
-            const response = await api.post('/token', { username, password });
-            const { access, refresh } = response.data;
-            localStorage.setItem('access-token', access);
-            localStorage.setItem('refresh-token', refresh);
-            navigate('/dashboard');
+
+            const success = await login(username, password);
+            if (success) {
+                navigate('/dashboard');
+            }
+            // const response = await api.post('/token', { username, password });
+            // const { access, refresh } = response.data;
+            // localStorage.setItem('access-token', access);
+            // localStorage.setItem('refresh-token', refresh);
+            // navigate('/dashboard');
         } catch (e) {
             console.log('Register failed');
         }

@@ -47,7 +47,6 @@ const Analysis = () => {
                         endDate.setMonth(endDate.getMonth() - 4);
                     }
 
-                    console.log('HELLOOOOOO');
                     const formattedStartDate = `${startDate.getFullYear()}-${(startDate.getMonth() + 1).toString().padStart(2, '0')}`
                     const formattedEndDate = `${endDate.getFullYear()}-${(endDate.getMonth() + 1).toString().padStart(2, '0')}`
     
@@ -100,12 +99,17 @@ const Analysis = () => {
 
             if (monthGroup) {
                 if (adjustForInflation) {
-                    console.log('ADJUSTED')
                     const monthIndex = months.findIndex(item => item.toISOString().slice(0, 7) === entryMonth);
                     let adjustedAmount = entry.amount;
     
+                    let lastInflationValue = 0;
                     for (let i = 0; i <= monthIndex; i++) {
-                        adjustedAmount *= (1 + inflationData[i] / 100);
+                        if (inflationData !== undefined) {
+                            adjustedAmount *= (1 + inflationData[i] / 100);
+                            lastInflationValue = inflationData[i];
+                        } else {
+                            adjustedAmount *= (1 + lastInflationValue / 100);
+                        }
                     }
 
                     if (entry.is_expense) {
@@ -177,10 +181,18 @@ const Analysis = () => {
     return (
         <div className="m-auto w-auto text-center align-middle p-5">
             <h1>
-                Displaying data { displayInflationChart ? '' : 'not' }adjusted for inflation
-                <button className="btn btn-seconday" onClick={() => setDisplayInflationChart(!displayInflationChart)}>Change</button>
+                Displaying data { displayInflationChart ? '' : 'not' } adjusted for inflation
+                <button className="btn btn-lg btn-seconday" onClick={() => setDisplayInflationChart(!displayInflationChart)}>Change</button>
             </h1>
-            <Line data={displayInflationChart ? chartInflationData : chartData} options={options} />
+
+            { entries.length > 2 ? 
+                <>
+                    <Line data={displayInflationChart ? chartInflationData : chartData} options={options} />
+                    <h3>Inflation data from the <a href="https://data.ecb.europa.eu/help/api/data">European Central Bank</a></h3>
+                    <h3>Keep in mind that the data may not be available for the most recent months</h3>
+                </> :
+                <h1>Not enough data</h1>
+            }
         </div>
     )
 }

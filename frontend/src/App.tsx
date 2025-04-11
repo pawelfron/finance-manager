@@ -52,11 +52,11 @@ function App() {
                     <Categories />
                   </ProtectedRoute>
                 } />
-                <Route path='/account' element={
+                {/* <Route path='/account' element={
                   <ProtectedRoute>
                     <Account />
                   </ProtectedRoute>
-                } />
+                } /> */}
                 <Route path='*' element={<NotFound />}/>
               </Routes>
             </div>

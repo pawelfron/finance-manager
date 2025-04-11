@@ -51,7 +51,7 @@ const Categories = () => {
 
     return (
         <>
-            <form className="new-category-form mx-auto" onSubmit={handleSubmit}>
+            <form className="new-category-form mx-auto mt-4" onSubmit={handleSubmit}>
                 <h3>Create new category:</h3>
                 <div className="m-1">
                     <label htmlFor="name" className="form-label">Name:</label>

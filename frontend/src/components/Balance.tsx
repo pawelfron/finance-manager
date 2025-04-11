@@ -2,6 +2,7 @@ import { FC, useContext, useEffect, useState } from "react";
 import api from "../api";
 import { AuthContext } from "../AuthContext";
 import { Entry } from "./EntryTable";
+import './Balance.css'
 
 type Details = {
     username: string,
@@ -34,7 +35,7 @@ const Balance: FC<BalanceProps> = ({ entries }) => {
     return (
         <>
             <h1>Welcome { details?.username }</h1>
-            <h1>Your balance is { details?.balance } PLN</h1>
+            <h1>Your balance is <span className="balance-text">{ details?.balance }</span> PLN</h1>
         </>
     )
 }
